@@ -1,15 +1,22 @@
 class SearchesController < ApplicationController
-  before_action :set_search, only: [:show, :update, :destroy]
+  before_action :set_search, only: [:show, :destroy]
 
   # GET /searches
   def index
     @searches = Search.all
-    render json: @searches
+
+    respond_to do |f|
+      f.html # Render HTML
+      f.json { render json: @searches } # Respond with JSON
+    end
   end
 
   # GET /searches/:id
   def show
-    render json: @search
+    respond_to do |f|
+      f.html # Render HTML
+      f.json { render json: @search } # Respond with JSON
+    end
   end
 
   # POST /searches
@@ -17,16 +24,22 @@ class SearchesController < ApplicationController
     @search = Search.new(search_params)
 
     if @search.save
-      render json: @search, status: :created
+      respond_to do |f|
+        f.html # Render HTML
+        f.json { render json: @search, status: :created } # Respond with JSON
+      end
     else
       render json: @search.errors, status: :unprocessable_entity
+      respond_to do |f|
+        f.html { render html: @search.errors, status: :unprocessable_entity } # Render HTML
+        f.json { render json: @search.errors, status: :unprocessable_entity } # Respond with JSON
+      end
     end
   end
 
   # DELETE /searches/:id
   def destroy
     @search.destroy
-    head :no_content
   end
 
   private
