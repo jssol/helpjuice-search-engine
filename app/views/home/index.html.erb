@@ -1,3 +1,15 @@
-<%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-<h1>Home#index</h1>
-<p>Find me in app/views/home/index.html.erb</p>
+<%= stylesheet_link_tag "home", "data-turbo-track": "reload" %>
+<section class="container">
+  <div class="analytics">
+    <h2 class="title">Latest searches</h2>
+    <ul class="list">
+      <% @latest_searches.each do |search| %>
+        <li>
+          <%= link_to(search_path(search.id)) do %>
+            <%= search.query %>
+          <% end %>
+        </li>
+      <% end %>
+  </div>
+  <div class="main"></div>
+</section>
